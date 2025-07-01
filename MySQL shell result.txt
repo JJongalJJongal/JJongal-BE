@@ -1,0 +1,425 @@
+Microsoft Windows [Version 10.0.19045.5796]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>mysql -h nest-database.cdg64u0o8ii4.ap-southeast-2.rds.amazonaws.com -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 35
+Server version: 8.0.41 Source distribution
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use kf99;
+Database changed
+mysql> CREATE TABLE history (
+    -> `id` int(11) NOT NULL AUTO_INCREMENT,
+    -> `ispass` TINYINT(1) NOT NULL,
+    -> `visited` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -> PRIMARY KEY(id)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.26 sec)
+
+mysql> set time_zone='Asia/Seoul';
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2025-05-03 14:01:55 |
++---------------------+
+1 row in set (0.20 sec)
+
+mysql> show kf99;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'kf99' at line 1
+mysql> show tables;
++----------------+
+| Tables_in_kf99 |
++----------------+
+| history        |
++----------------+
+1 row in set (0.21 sec)
+
+mysql> DESC history ;
++---------+------------+------+-----+-------------------+-------------------+
+| Field   | Type       | Null | Key | Default           | Extra             |
++---------+------------+------+-----+-------------------+-------------------+
+| id      | int        | NO   | PRI | NULL              | auto_increment    |
+| ispass  | tinyint(1) | NO   |     | NULL              |                   |
+| visited | datetime   | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++---------+------------+------+-----+-------------------+-------------------+
+3 rows in set (0.22 sec)
+
+mysql> INSERT INTO history VALUES (0, 9)
+    -> ;
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO history VALUES (0, 9, 2025-05-03 14:01:55) ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '14:01:55)' at line 1
+mysql> INSERT INTO history VALUES (0, 9, "2025-05-03 14:01:55") ;
+Query OK, 1 row affected (0.21 sec)
+
+mysql> SELECT * FROM history ;
++----+--------+---------------------+
+| id | ispass | visited             |
++----+--------+---------------------+
+|  1 |      9 | 2025-05-03 14:01:55 |
++----+--------+---------------------+
+1 row in set (0.24 sec)
+
+mysql> mysqldump -u root
+    -> database kf99
+    -> single-transaction
+    -> compress
+    -> order-by-primary
+    -> routines=0
+    -> triggers=0
+    -> events=0
+    -> rootroot | mysql -u root
+    -> port=RDS_port
+    -> port=3306
+    -> host=nest-database.cdg64u0o8ii4.ap-southeast-2.rds.amazonaws.com
+    -> rootroot
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysqldump -u root
+database kf99
+single-transaction
+compress
+order-by-primary
+rou' at line 1
+mysql> use use
+ERROR 1049 (42000): Unknown database 'use'
+mysql> use kf99 ;
+Database changed
+mysql> Show tables;
++----------------+
+| Tables_in_kf99 |
++----------------+
+| history        |
++----------------+
+1 row in set (0.23 sec)
+
+mysql> user wlduq0150 ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'user wlduq0150' at line 1
+mysql> use wlduq0150 ;
+Database changed
+mysql> Show tables;
+Empty set (0.21 sec)
+
+mysql> CREATE TABLE t_table (
+    ->  `id` int(11) NOT NULL AUTO_INCREMENT,
+    -> `ispass` TINYINT(1) NOT NULL,
+    -> `visited` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -> PRIMARY KEY(id)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.23 sec)
+
+mysql> show tables ;
++---------------------+
+| Tables_in_wlduq0150 |
++---------------------+
+| t_table             |
++---------------------+
+1 row in set (0.23 sec)
+
+mysql> SELECT * FROM t_tables ;
+ERROR 1146 (42S02): Table 'wlduq0150.t_tables' doesn't exist
+mysql> SELECT * FROM t_table ;
+Empty set (0.20 sec)
+
+mysql> INSERT INTO t_table VALUES (0, 9, "2025-05-03 14:01:55") ;
+Query OK, 1 row affected (0.23 sec)
+
+mysql> SELECT * FROM t_table ;
++----+--------+---------------------+
+| id | ispass | visited             |
++----+--------+---------------------+
+|  1 |      9 | 2025-05-03 14:01:55 |
++----+--------+---------------------+
+1 row in set (0.23 sec)
+
+mysql> INSERT INTO t_table VALUES (1, 8, "2026-05-03 14:01:55") ;
+ERROR 1062 (23000): Duplicate entry '1' for key 't_table.PRIMARY'
+mysql> INSERT INTO t_table VALUES (0, 9, "2025-05-03 14:01:55") ;
+Query OK, 1 row affected (0.21 sec)
+
+mysql> INSERT INTO t_table VALUES (0, 9, "2025-05-03 14:01:55") ;
+Query OK, 1 row affected (0.23 sec)
+
+mysql> SELECT * FROM t_table ;
++----+--------+---------------------+
+| id | ispass | visited             |
++----+--------+---------------------+
+|  1 |      9 | 2025-05-03 14:01:55 |
+|  2 |      9 | 2025-05-03 14:01:55 |
+|  3 |      9 | 2025-05-03 14:01:55 |
++----+--------+---------------------+
+3 rows in set (0.20 sec)
+
+mysql> CREATE TABLE story (
+    -> id INT NOT NULL AUTO_INCREMENT,
+    ->  title VARCHAR(20),
+    ->  author VARCHAR(20),
+    ->  date Date,
+    ->  PRIMARY KEY(id)
+    -> );
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> show story ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'story' at line 1
+mysql> show table sotry ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sotry' at line 1
+mysql> show table story ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'story' at line 1
+mysql> Show tables ;
++---------------------+
+| Tables_in_wlduq0150 |
++---------------------+
+| story               |
+| t_table             |
++---------------------+
+2 rows in set (0.20 sec)
+
+mysql> DESC story ;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| title  | varchar(20) | YES  |     | NULL    |                |
+| author | varchar(20) | YES  |     | NULL    |                |
+| date   | date        | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+4 rows in set (0.21 sec)
+
+mysql> INSERT INTO story VALUES (0, "콩쥐팥쥐, "카리나", "2025-05-03") ;
+    ">
+    "> :
+    "> ;
+    ">
+    ">
+    "> :ㅈㅂ
+    "> ^C
+mysql> INSERT INTO story VALUES (0, "콩쥐팥쥐, "카리나", "2025-05-03") ;
+    ">
+    ">
+    "> :ㅈㅂ
+    "> ^X^C
+mysql> INSERT INTO blog VALUES(0, "콩쥐팥쥐", "팀 꼬꼬북", "2025-05-03");
+ERROR 1146 (42S02): Table 'wlduq0150.blog' doesn't exist
+mysql> INSERT INTO story  VALUES(0, "콩쥐팥쥐", "팀 꼬꼬북", "2025-05-03");
+Query OK, 1 row affected (0.22 sec)
+
+mysql> SELECT * FROM story ;
++----+----------+-----------+------------+
+| id | title    | author    | date       |
++----+----------+-----------+------------+
+|  1 | 콩쥐팥쥐 | 팀 꼬꼬북 | 2025-05-03 |
++----+----------+-----------+------------+
+1 row in set (0.22 sec)
+
+mysql> INSERT INTO story VALUES(0, "이상한 나라의 김병찬", "김민준 어린이", "2025-05-02");
+Query OK, 1 row affected (0.21 sec)
+
+mysql> INSERT INTO story VALUES(0, "순데렐라 간 많이 달라는 이정현", "이민준 어린이", "2025-05-01");
+Query OK, 1 row affected (0.21 sec)
+
+mysql> INSERT INTO story VALUES(0, "오늘은 내가 트와일라잇 주인공 상아킴", "박민준 어린이", "2025-04-30");
+Query OK, 1 row affected (0.19 sec)
+
+mysql> INSERT INTO story VALUES(0, "잭과 콩나무 마저 클라이밍 한 소정문", "최민준 어린이", "2025-04-29");
+Query OK, 1 row affected (0.22 sec)
+
+mysql> SELECT * FROM story ;
++----+--------------------------------------+---------------+------------+
+| id | title                                | author        | date       |
++----+--------------------------------------+---------------+------------+
+|  1 | 콩쥐팥쥐                             | 팀 꼬꼬북     | 2025-05-03 |
+|  2 | 이상한 나라의 김병찬                 | 김민준 어린이 | 2025-05-02 |
+|  3 | 순데렐라 간 많이 달라는 이정현       | 이민준 어린이 | 2025-05-01 |
+|  4 | 오늘은 내가 트와일라잇 주인공 상아킴 | 박민준 어린이 | 2025-04-30 |
+|  5 | 잭과 콩나무 마저 클라이밍 한 소정문  | 최민준 어린이 | 2025-04-29 |
++----+--------------------------------------+---------------+------------+
+5 rows in set (0.22 sec)
+
+mysql> DESC story ;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| title  | varchar(20) | YES  |     | NULL    |                |
+| author | varchar(20) | YES  |     | NULL    |                |
+| date   | date        | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+4 rows in set (0.35 sec)
+
+mysql> Show tables ;
++---------------------+
+| Tables_in_wlduq0150 |
++---------------------+
+| story               |
+| t_table             |
++---------------------+
+2 rows in set (0.21 sec)
+
+mysql> SELECT * FROM t_table ;
++----+--------+---------------------+
+| id | ispass | visited             |
++----+--------+---------------------+
+|  1 |      9 | 2025-05-03 14:01:55 |
+|  2 |      9 | 2025-05-03 14:01:55 |
+|  3 |      9 | 2025-05-03 14:01:55 |
++----+--------+---------------------+
+3 rows in set (0.22 sec)
+
+mysql> show tables ;
++---------------------+
+| Tables_in_wlduq0150 |
++---------------------+
+| story               |
+| t_table             |
++---------------------+
+2 rows in set (0.23 sec)
+
+mysql> show user
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'user' at line 1
+mysql> DESC t_table ;
++---------+------------+------+-----+-------------------+-------------------+
+| Field   | Type       | Null | Key | Default           | Extra             |
++---------+------------+------+-----+-------------------+-------------------+
+| id      | int        | NO   | PRI | NULL              | auto_increment    |
+| ispass  | tinyint(1) | NO   |     | NULL              |                   |
+| visited | datetime   | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++---------+------------+------+-----+-------------------+-------------------+
+3 rows in set (0.21 sec)
+
+mysql> DESC sotry ;
+ERROR 1146 (42S02): Table 'wlduq0150.sotry' doesn't exist
+mysql> DESC story ;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| title  | varchar(20) | YES  |     | NULL    |                |
+| author | varchar(20) | YES  |     | NULL    |                |
+| date   | date        | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+4 rows in set (0.23 sec)
+
+mysql> SELECT * FROM story ;
++----+--------------------------------------+---------------+------------+
+| id | title                                | author        | date       |
++----+--------------------------------------+---------------+------------+
+|  1 | 콩쥐팥쥐                             | 팀 꼬꼬북     | 2025-05-03 |
+|  2 | 이상한 나라의 김병찬                 | 김민준 어린이 | 2025-05-02 |
+|  3 | 순데렐라 간 많이 달라는 이정현       | 이민준 어린이 | 2025-05-01 |
+|  4 | 오늘은 내가 트와일라잇 주인공 상아킴 | 박민준 어린이 | 2025-04-30 |
+|  5 | 잭과 콩나무 마저 클라이밍 한 소정문  | 최민준 어린이 | 2025-04-29 |
++----+--------------------------------------+---------------+------------+
+5 rows in set (0.22 sec)
+
+mysql> SHOW DATABASES ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| kf99               |
+| mysql              |
+| performance_schema |
+| sys                |
+| wlduq0150          |
++--------------------+
+6 rows in set (0.21 sec)
+
+mysql> use kf99 ;
+Database changed
+mysql> SHOW TABLES ;
++----------------+
+| Tables_in_kf99 |
++----------------+
+| history        |
++----------------+
+1 row in set (0.21 sec)
+
+mysql> use wlduq0150 l
+Database changed
+mysql> SHOW TABLES ;
++---------------------+
+| Tables_in_wlduq0150 |
++---------------------+
+| story               |
+| t_table             |
++---------------------+
+2 rows in set (0.20 sec)
+
+mysql> CREATE TABLE user (
+    ->  id INT NOT NULL AUTO_INCREMENT,
+    ->  user_id VARCHAR(20),
+    ->  user_pw VARCHAR(20),
+    ->  name VARCHAR(20),
+    ->  gender CHAR(1),
+    ->  age INT,
+    ->  like_subject VARCHAR(10),
+    ->  date Date,
+    ->  PRIMARY KEY(id)
+    -> );
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> DESC user ;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| id           | int         | NO   | PRI | NULL    | auto_increment |
+| user_id      | varchar(20) | YES  |     | NULL    |                |
+| user_pw      | varchar(20) | YES  |     | NULL    |                |
+| name         | varchar(20) | YES  |     | NULL    |                |
+| gender       | char(1)     | YES  |     | NULL    |                |
+| age          | int         | YES  |     | NULL    |                |
+| like_subject | varchar(10) | YES  |     | NULL    |                |
+| date         | date        | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.21 sec)
+
+mysql> CREATE TABLE user (
+    ->  id INT NOT NULL AUTO_INCREMENT,
+    ->  user_id VARCHAR(20),
+    ->  user_pw VARCHAR(20),
+    ->  name VARCHAR(20),
+    ->  gender CHAR(1),
+    ->  age INT,
+    ->  like_subject VARCHAR(10),
+    ->  date Date,
+    ->  PRIMARY KEY(id)
+    ->  PRIMARY KEY(id)^C
+mysql> CREATE TABLE user (
+    ->  id INT NOT NULL AUTO_INCREMENT,
+    ->  user_id VARCHAR(20),
+    ->  user_pw VARCHAR(20),
+    ->  name VARCHAR(20),
+    ->  gender CHAR(1),
+    ->  age INT,
+    ->  like_subject VARCHAR(10),
+    ->  date Date,
+    ->  PRIMARY KEY(id)
+    -> ^C
+mysql> DESC user ;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| id           | int         | NO   | PRI | NULL    | auto_increment |
+| user_id      | varchar(20) | YES  |     | NULL    |                |
+| user_pw      | varchar(20) | YES  |     | NULL    |                |
+| name         | varchar(20) | YES  |     | NULL    |                |
+| gender       | char(1)     | YES  |     | NULL    |                |
+| age          | int         | YES  |     | NULL    |                |
+| like_subject | varchar(10) | YES  |     | NULL    |                |
+| date         | date        | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.21 sec)
+
+mysql>
